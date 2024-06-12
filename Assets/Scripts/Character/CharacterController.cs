@@ -2,15 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class CharacterController : MonoBehaviour
 { 
+    private CharacterInput characterInput;
     private Vector3 input;
     private Rigidbody rb;
     [SerializeField] private float moveSpeed = 5f;
-    void Start()
-    {
-        rb = GetComponentInChildren<Rigidbody>();     
+
+    private void Awake() {
+        rb = GetComponentInChildren<Rigidbody>();  
+        characterInput = new CharacterInput();
+        
+    }
+    private void OnEnable() {
+        characterInput.Character.Enable();
+    }
+
+    private void OnDisable() {
+        characterInput.Character.Disable();    
     }
 
     private void Update() {
