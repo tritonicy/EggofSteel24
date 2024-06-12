@@ -11,18 +11,39 @@ public class LockSystem : MonoBehaviour
     public bool isLocked = false;
     [SerializeField] GameObject cameraFocus;
     [SerializeField] CinemachineVirtualCamera vcam;
+    private Vector2 swapEnemyVector;
     private GameObject closestEnemy;
+    private bool canSwap = false;
+    private float swapTimer;
+    private float swapTimeCounter = 0.5f;
 
     private void Awake() {
         characterInput = new CharacterInput();
 
         characterInput.Character.Lock.performed += (context) => HandleLock();
+        characterInput.Character.LockSwap.performed += (context) => swapEnemyVector = context.ReadValue<Vector2>();
+        characterInput.Character.LockSwap.canceled += (context) => swapEnemyVector = Vector3.zero;
     }
 
 
     void Update()
     {
+        if(swapEnemyVector.magnitude > 0){
+            swapTimer += Time.deltaTime;
+        }
+        else{
+            swapTimer = 0f;
+            canSwap = false;
+        }
+
+        if(swapTimer > swapTimeCounter) {
+            swapTimer = 0f;
+            canSwap = true;
+            Debug.Log(swapEnemyVector);
+        }
+
         HandleFollow();
+        HandleLockSwap();
     }
 
     private void OnEnable() {
@@ -77,4 +98,24 @@ public class LockSystem : MonoBehaviour
         Debug.Log(closestEnemy.gameObject.name);
     }
 
+    private void HandleLockSwap() {
+        if(!canSwap) {
+            return;
+        }
+        else{
+            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
+            var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x,0,swapEnemyVector.y));
+            
+            Vector3 SwapToLocation = this.transform.position + changedDir * 5f;
+
+            closestEnemy = FindClosestEnemy(SwapToLocation,5f);
+            canSwap = false;
+        }
+    }
+
+    private void OnDrawGizmos() {
+            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
+            var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x,0,swapEnemyVector.y));
+        Gizmos.DrawSphere(this.transform.position + changedDir * 5f , 5f);
+    }
 }

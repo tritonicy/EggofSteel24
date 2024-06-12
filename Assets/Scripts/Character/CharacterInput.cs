@@ -37,10 +37,10 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Newaction"",
-                    ""type"": ""Button"",
-                    ""id"": ""7dec4c92-3cf9-45c9-9648-6e9edd2994c0"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""LockSwap"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""89a7ddb7-5f5e-4e8d-9d0d-bff442790cb5"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -82,12 +82,12 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3a00b88b-da09-40f2-868d-0bd53df35519"",
-                    ""path"": ""<Keyboard>/h"",
+                    ""id"": ""a8a799c0-bd33-4908-b401-424cb0af0f87"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Newaction"",
+                    ""action"": ""LockSwap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -99,7 +99,7 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
         // Character
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Lock = m_Character.FindAction("Lock", throwIfNotFound: true);
-        m_Character_Newaction = m_Character.FindAction("Newaction", throwIfNotFound: true);
+        m_Character_LockSwap = m_Character.FindAction("LockSwap", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -162,13 +162,13 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Character;
     private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
     private readonly InputAction m_Character_Lock;
-    private readonly InputAction m_Character_Newaction;
+    private readonly InputAction m_Character_LockSwap;
     public struct CharacterActions
     {
         private @CharacterInput m_Wrapper;
         public CharacterActions(@CharacterInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Lock => m_Wrapper.m_Character_Lock;
-        public InputAction @Newaction => m_Wrapper.m_Character_Newaction;
+        public InputAction @LockSwap => m_Wrapper.m_Character_LockSwap;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -181,9 +181,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @Lock.started += instance.OnLock;
             @Lock.performed += instance.OnLock;
             @Lock.canceled += instance.OnLock;
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @LockSwap.started += instance.OnLockSwap;
+            @LockSwap.performed += instance.OnLockSwap;
+            @LockSwap.canceled += instance.OnLockSwap;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -191,9 +191,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @Lock.started -= instance.OnLock;
             @Lock.performed -= instance.OnLock;
             @Lock.canceled -= instance.OnLock;
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @LockSwap.started -= instance.OnLockSwap;
+            @LockSwap.performed -= instance.OnLockSwap;
+            @LockSwap.canceled -= instance.OnLockSwap;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -214,6 +214,6 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
     public interface ICharacterActions
     {
         void OnLock(InputAction.CallbackContext context);
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnLockSwap(InputAction.CallbackContext context);
     }
 }
