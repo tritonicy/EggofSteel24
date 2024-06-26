@@ -4,7 +4,6 @@ using System.Net;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class LockSystem : MonoBehaviour
 {
     private CharacterInput characterInput;
@@ -16,7 +15,6 @@ public class LockSystem : MonoBehaviour
     private bool canSwap = false;
     private float swapTimer;
     private float swapTimeCounter = 0.5f;
-
     private void Awake() {
         characterInput = new CharacterInput();
 
@@ -113,9 +111,9 @@ public class LockSystem : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos() {
-            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
-            var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x,0,swapEnemyVector.y));
-        Gizmos.DrawSphere(this.transform.position + changedDir * 5f , 5f);
-    }
+    // private void OnDrawGizmos() {
+    //         var matrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
+    //         var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x,0,swapEnemyVector.y));
+    //     Gizmos.DrawSphere(this.transform.position + changedDir * 5f , 5f);
+    // }
 }

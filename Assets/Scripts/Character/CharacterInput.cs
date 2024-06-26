@@ -44,6 +44,15 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""77d55090-3f6e-49e0-bca8-2eb699f9c2f7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,17 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
                     ""action"": ""LockSwap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d28f2568-6760-4861-aff7-a2e00c1980a6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,6 +120,7 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Lock = m_Character.FindAction("Lock", throwIfNotFound: true);
         m_Character_LockSwap = m_Character.FindAction("LockSwap", throwIfNotFound: true);
+        m_Character_Jump = m_Character.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,12 +184,14 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
     private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
     private readonly InputAction m_Character_Lock;
     private readonly InputAction m_Character_LockSwap;
+    private readonly InputAction m_Character_Jump;
     public struct CharacterActions
     {
         private @CharacterInput m_Wrapper;
         public CharacterActions(@CharacterInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Lock => m_Wrapper.m_Character_Lock;
         public InputAction @LockSwap => m_Wrapper.m_Character_LockSwap;
+        public InputAction @Jump => m_Wrapper.m_Character_Jump;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -184,6 +207,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @LockSwap.started += instance.OnLockSwap;
             @LockSwap.performed += instance.OnLockSwap;
             @LockSwap.canceled += instance.OnLockSwap;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -194,6 +220,9 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
             @LockSwap.started -= instance.OnLockSwap;
             @LockSwap.performed -= instance.OnLockSwap;
             @LockSwap.canceled -= instance.OnLockSwap;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -215,5 +244,6 @@ public partial class @CharacterInput: IInputActionCollection2, IDisposable
     {
         void OnLock(InputAction.CallbackContext context);
         void OnLockSwap(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }
