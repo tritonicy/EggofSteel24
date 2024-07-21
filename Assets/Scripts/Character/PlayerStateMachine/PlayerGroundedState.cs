@@ -10,14 +10,22 @@ public class PlayerGroundedState : PlayerBaseState
     public override void CheckSwitchState()
     {
         // if a player is grounded and jump is pressed, switch to jump state
-        if(context.isJumpPressed && context.isGrounded) {
+        if(context.isJumpPressed || !context.isGrounded) {
+            SwitchState(states.Jump());
+        }
+        if(context.jumpBufferCounter > 0f) {
+
+            context.rb.velocity = new Vector3(context.rb.velocity.x, 5f ,context.rb.velocity.z);
+
+            context.isJumping = true;
+            context.jumpBufferCounter = 0f;
             SwitchState(states.Jump());
         }
     }
 
     public override void EnterState()
     {
-        Debug.Log("Hello1");
+        context.isJumping = false;
     }
 
     public override void ExitState()
@@ -30,6 +38,7 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void UpdateState()
     {
+        context.coyoteCounter = context.coyoteTime;
         CheckSwitchState();
     }
 }

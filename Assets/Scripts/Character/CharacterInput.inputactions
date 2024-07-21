@@ -69,6 +69,17 @@
                 },
                 {
                     "name": "",
+                    "id": "96e8b729-2ed8-4aa9-9bbe-3235747eba53",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Lock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a8a799c0-bd33-4908-b401-424cb0af0f87",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",

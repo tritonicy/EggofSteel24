@@ -7,20 +7,22 @@ using UnityEngine.InputSystem;
 public class PlayerStateMachine : MonoBehaviour
 {
     public CharacterInput characterInput;
+    public LockSystem lockSystem;
     public Vector3 input;
     public Rigidbody rb;
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] public float jumpingSpeed = 2f;
-    public bool isJumpPressed;
+    [SerializeField] public float jumpSpeed;
     public bool isGrounded = false;
+    public bool isFalling;
     [SerializeField] LayerMask groundLayer;
+    public bool isJumpPressed = false;
+    public bool isJumping = false;
+    public float jumpBufferTime = 0.1f;
+    public float jumpBufferCounter = 0f;
+    public float coyoteTime = 0.2f;
+    public float coyoteCounter = 0f;
 
-    public float gravtity = -9.8f;
-    float initialJumpVelocity;
-    float maxJumpTime;
-    float maxJumpHeight;
     
-
     private PlayerBaseState currentState;
     // public get ve setter
     public PlayerBaseState CurrentState{get{return currentState;} set{currentState = value;}}
@@ -30,14 +32,16 @@ public class PlayerStateMachine : MonoBehaviour
     private void Awake() {
         rb = GetComponentInChildren<Rigidbody>();
         characterInput = new CharacterInput();
+        lockSystem = FindObjectOfType<LockSystem>();
         characterInput.Character.Jump.started += OnJump;
         characterInput.Character.Jump.canceled += OnJump;
+
+
 
         states = new PlayerStateFactory(this);
         currentState = states.Grounded();
         currentState.EnterState();
 
-        SetupJumpVariables();  
     }
     private void OnEnable() {
         characterInput.Character.Enable();
@@ -61,10 +65,12 @@ public class PlayerStateMachine : MonoBehaviour
         CheckIsGrounded();
         currentState.UpdateState();
         Look();
+        
     }
     private void FixedUpdate() {
         Move();
     }
+
     private void GatherInput() {
         input = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
 
@@ -84,12 +90,10 @@ public class PlayerStateMachine : MonoBehaviour
         }
     }
     private void CheckIsGrounded() {
-        isGrounded = Physics.BoxCast(transform.position, transform.localScale*0.5f, -transform.up , out RaycastHit m_Hit, transform.rotation, 1f) ? true : false;
+        isGrounded = Physics.BoxCast(transform.position, new Vector3(1f,0.2f,1f), -transform.up , out RaycastHit m_Hit, transform.rotation, 1f, groundLayer) ? true : false;
     }
 
-    private void SetupJumpVariables() {
-        float timeToApex = maxJumpTime / 2;
-        gravtity = (-2 * maxJumpHeight) / MathF.Pow(timeToApex,2);
-        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
+    private void CircularMove() {
+
     }
 }

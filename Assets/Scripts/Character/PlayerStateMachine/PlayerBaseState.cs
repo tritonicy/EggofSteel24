@@ -9,7 +9,6 @@ public abstract class PlayerBaseState
     protected PlayerBaseState superState;
     protected PlayerBaseState subState;
 
-
     protected PlayerBaseState(PlayerStateMachine context, PlayerStateFactory states)
     {
         this.context = context;
