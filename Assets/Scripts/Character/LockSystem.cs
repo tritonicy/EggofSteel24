@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -8,18 +9,19 @@ using UnityEngine.InputSystem;
 public class LockSystem : MonoBehaviour
 {
     private CharacterInput characterInput;
-    public bool isLocked = false;
-    [SerializeField] GameObject cameraFocus;
     [SerializeField] CinemachineVirtualCamera vcam;
-    private Vector2 swapEnemyVector;
-    private GameObject closestEnemy;
+    public bool isLocked = false;
     private bool canSwap = false;
-    private float swapTimer;
-    private float swapTimeCounter = 0.2f;
+    [SerializeField] GameObject cameraFocus;
+    private Vector2 swapEnemyVector;
+    public GameObject closestEnemy;
     [SerializeField] float fov = 30f;
     [SerializeField] float radius = 10f;
     [SerializeField] LayerMask enemyMask;
-    private void Awake() {
+    private float swapTimer;
+    private float swapTimeCounter = 0.4f;
+    private void Awake()
+    {
         characterInput = new CharacterInput();
 
         characterInput.Character.Lock.performed += (context) => HandleLock();
@@ -30,32 +32,38 @@ public class LockSystem : MonoBehaviour
 
     void Update()
     {
-        // Debug.Log(cameraFocus.transform.position);
-        if(closestEnemy != null) {
-            //Debug.Log(closestEnemy.name);
-        }
-        // Debug.Log("canswap" + canSwap);
-        // Debug.Log(Mouse3D.instance.IsMouseMoving());
+        // if(closestEnemy != null) {
+        //     Vector3 diff = this.transform.position - closestEnemy.transform.position;
+        //     float angle = (Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg) + 45f;
+        //     if(angle < 0) angle = 360 + angle;
+        //     Debug.Log(angle);
+        // }
 
-        if(ControllerDetection.Instance.isControllerActive) {
+        if (ControllerDetection.Instance.isControllerActive)
+        {
 
-           if(swapEnemyVector.magnitude > 0){
+            if (swapEnemyVector.magnitude > 0)
+            {
                 swapTimer += Time.deltaTime;
             }
-            else{
+            else
+            {
                 swapTimer = 0f;
                 canSwap = false;
             }
 
-            if(swapTimer > swapTimeCounter) {
+            if (swapTimer > swapTimeCounter)
+            {
                 swapTimer = 0f;
                 canSwap = true;
-            } 
+            }
 
             HandleLockSwap();
         }
-        else{
-            if(Mouse3D.instance.IsMouseMoving()) {
+        else
+        {
+            if (Mouse3D.instance.IsMouseMoving())
+            {
                 swapTimer += Time.deltaTime;
             }
             else
@@ -132,7 +140,6 @@ public class LockSystem : MonoBehaviour
     private GameObject FindClosestEnemy(List<GameObject> gameObjects)
     {
         float minDistance = float.MaxValue;
-        GameObject closestEnemy = null;
 
         if (gameObjects.Count > 0)
         {
@@ -159,42 +166,42 @@ public class LockSystem : MonoBehaviour
         closestEnemy = FindClosestEnemy(this.transform.position, 15f);
     }
 
-    private void HandleLockSwap() {
-        if(!canSwap) {
+    private void HandleLockSwap()
+    {
+        if (!canSwap)
+        {
             return;
         }
-        else{
-            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0,45,0));
-            var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x,0,swapEnemyVector.y));
-            
+        else
+        {
+            var matrix = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+            var changedDir = matrix.MultiplyPoint3x4(new Vector3(swapEnemyVector.x, 0, swapEnemyVector.y));
+
             Vector3 SwapToLocation = this.transform.position + changedDir * 5f;
 
-            closestEnemy = FindClosestEnemy(SwapToLocation,5f);
+            closestEnemy = FindClosestEnemy(SwapToLocation, 5f);
             canSwap = false;
         }
     }
 
-    // private void OnDrawGizmos() {
-    //     Gizmos.DrawSphere(this.transform.position, radius);
-    // }
-
-    private void HandleMouseLockSwap() {
-        if(!canSwap) {
+    private void HandleMouseLockSwap()
+    {
+        if (!canSwap)
+        {
             return;
         }
-        if(!isLocked) {
-            return;    
+        if (!isLocked)
+        {
+            return;
         }
         else
         {
-
             Vector2 mousePos = new Vector2(Input.mousePosition.x / 1920, Input.mousePosition.y / 1080);
             Vector2 centerScreen = new Vector2(0.5f, 0.5f);
 
             Vector2 MouseVector = mousePos - centerScreen;
 
             float mouseAngletoCenter = Vector3.Angle(Vector2.right, MouseVector);
-            // Debug.Log(angle);
 
             Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, enemyMask);
 

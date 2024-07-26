@@ -696,9 +696,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8b5a08049bd0024eaffd7d9accd8f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursor: {fileID: 367626438}
-  cursorParent: {fileID: 43445175}
-  deneme: {x: 0, y: 0}
 --- !u!4 &880046918
 Transform:
   m_ObjectHideFlags: 0
@@ -1534,9 +1531,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c19f8b91a4594947ada111403f26fe6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vcam: {fileID: 1680971430}
   isLocked: 0
   cameraFocus: {fileID: 291639491}
-  vcam: {fileID: 1680971430}
+  closestEnemy: {fileID: 0}
   fov: 30
   radius: 15
   enemyMask:
@@ -1558,6 +1556,7 @@ MonoBehaviour:
   input: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   moveSpeed: 5
+  circularMoveSpeed: 0.4
   jumpSpeed: 3
   isGrounded: 0
   isFalling: 0
@@ -1571,6 +1570,7 @@ MonoBehaviour:
   coyoteTime: 0.2
   coyoteCounter: 0
   states: {fileID: 0}
+  angle: 0
 --- !u!1 &2033202613
 GameObject:
   m_ObjectHideFlags: 0
