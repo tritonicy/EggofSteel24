@@ -9,12 +9,18 @@ public class PlayerIdleState : PlayerBaseState
     }
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+        if(context.isDashPressed) {
+            SwitchState(states.Dashing());
+        }
+        else if(context.isWalkingPressed) {
+            SwitchState(states.Walk());
+        }
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        //TODO : animasyon setboollari ayarla buraya
+        // Debug.Log("idle");
     }
 
     public override void ExitState()

@@ -12,6 +12,7 @@ public class CharacterController : MonoBehaviour
     private Rigidbody rb;
     [SerializeField] private float moveSpeed = 5f;
 
+
     private void Awake() {
         rb = GetComponentInChildren<Rigidbody>();  
         characterInput = new CharacterInput();

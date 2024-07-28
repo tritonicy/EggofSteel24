@@ -19,12 +19,20 @@ public class PlayerStateMachine : MonoBehaviour
     [SerializeField] LayerMask groundLayer;
     public bool isJumpPressed = false;
     public bool isJumping = false;
+    public bool isDashPressed = false;
+    public bool isDashing = false;
+    public bool isWalkingPressed = false;
     public float jumpBufferTime = 0.1f;
     public float jumpBufferCounter = 0f;
     public float coyoteTime = 0.2f;
     public float coyoteCounter = 0f;
-    float xRate = 1f;
-    float zRate = 1f;
+    private float xRate = 1f;
+    private float zRate = 1f;
+    [SerializeField] public float dashForce = 5f;
+    [SerializeField] public float dashDuration = 0.75f;
+    public Vector3 delayedForceToApply;
+    public float DashTimer = 1f;
+    public float DashTimeCounter;
 
 
     private PlayerBaseState currentState;
@@ -40,7 +48,8 @@ public class PlayerStateMachine : MonoBehaviour
         lockSystem = FindObjectOfType<LockSystem>();
         characterInput.Character.Jump.started += OnJump;
         characterInput.Character.Jump.canceled += OnJump;
-
+        characterInput.Character.Dash.started += OnDash;
+        characterInput.Character.Dash.canceled += OnDash;
 
 
         states = new PlayerStateFactory(this);
@@ -58,6 +67,9 @@ public class PlayerStateMachine : MonoBehaviour
     private void OnJump(InputAction.CallbackContext context) {
         isJumpPressed = context.ReadValueAsButton();
     }
+    private void OnDash(InputAction.CallbackContext context) {
+        isDashPressed = context.ReadValueAsButton();
+    } 
     
     void Start()
     {
@@ -68,7 +80,7 @@ public class PlayerStateMachine : MonoBehaviour
     {  
         GatherInput();
         CheckIsGrounded();
-        currentState.UpdateState();
+        currentState.UpdateStates();
         Look();
         Physics.SyncTransforms();
         if(lockSystem.isLocked) {
@@ -77,6 +89,8 @@ public class PlayerStateMachine : MonoBehaviour
                 CircularMove(currentAngle);
             }
         }
+
+        DashTimeCounter += Time.deltaTime;
     }
     private void FixedUpdate() {
 
@@ -85,7 +99,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void GatherInput() {
         input = new Vector3(Input.GetAxisRaw("Horizontal"),0,Input.GetAxisRaw("Vertical"));
-
+        isWalkingPressed = input.magnitude > 0;
     }
     private void Move() {
         rb.MovePosition(transform.position + transform.forward * input.magnitude * moveSpeed * Time.deltaTime);
@@ -118,9 +132,6 @@ public class PlayerStateMachine : MonoBehaviour
 
         xRate = Mathf.Abs(Mathf.Cos((float) angle * Mathf.Deg2Rad));
         zRate = Mathf.Abs(Mathf.Sin((float) angle * Mathf.Deg2Rad));
-
-        Debug.Log(xRate);
-        Debug.Log(zRate);
 
 
 
@@ -162,5 +173,12 @@ public class PlayerStateMachine : MonoBehaviour
         float angle = (Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg) + 45f;
         if (angle < 0) angle = 360 + angle;
         return angle;
+    }
+
+    public void ResetDash() {
+        isDashing = false;
+    }
+    public void DelayedDashForce() {
+        rb.AddForce(delayedForceToApply, ForceMode.Impulse);
     }
 }

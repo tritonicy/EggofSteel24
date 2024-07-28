@@ -22,4 +22,7 @@ public class PlayerStateFactory : MonoBehaviour
     public PlayerBaseState Grounded() {
         return new PlayerGroundedState(context, this);
     }
+    public PlayerBaseState Dashing() {
+        return new PlayerDashState(context,this);
+    }
 }

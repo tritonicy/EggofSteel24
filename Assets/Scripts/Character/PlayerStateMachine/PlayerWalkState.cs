@@ -9,12 +9,17 @@ public class PlayerWalkState : PlayerBaseState
     }
     public override void CheckSwitchState()
     {
-        throw new System.NotImplementedException();
+        if(context.isDashPressed) {
+            SwitchState(states.Dashing());
+        } else if(!context.isWalkingPressed) {
+            SwitchState(states.Idle());
+        }
     }
 
     public override void EnterState()
     {
-        throw new System.NotImplementedException();
+        //TODO : animasyon setboollari ayarla buraya
+        // Debug.Log("Walk");
     }
 
     public override void ExitState()

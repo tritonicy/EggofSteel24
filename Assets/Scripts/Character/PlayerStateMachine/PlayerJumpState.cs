@@ -6,7 +6,8 @@ using UnityEngine;
 public class PlayerJumpState : PlayerBaseState
 {
     public PlayerJumpState (PlayerStateMachine context, PlayerStateFactory states) : base(context,states) {
-        
+        InitializeSubstate();
+        isRoot = true;
     }
 
     public override void CheckSwitchState()
@@ -27,7 +28,15 @@ public class PlayerJumpState : PlayerBaseState
 
     public override void InitializeSubstate()
     {
-
+        if(context.isDashPressed) {
+            SetSubstate(states.Dashing());
+        }
+        else if (context.isWalkingPressed) {
+            SetSubstate(states.Walk());
+        }
+        else{
+            SetSubstate(states.Idle());
+        }
     }
 
     public override void UpdateState()

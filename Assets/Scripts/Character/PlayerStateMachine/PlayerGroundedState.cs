@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerGroundedState : PlayerBaseState
 {
     public PlayerGroundedState (PlayerStateMachine context, PlayerStateFactory states) : base(context,states) { 
-        
+        InitializeSubstate();
+        isRoot = true;
     }
     public override void CheckSwitchState()
     {
@@ -34,6 +35,15 @@ public class PlayerGroundedState : PlayerBaseState
 
     public override void InitializeSubstate()
     {
+        if(context.isDashPressed) {
+            SetSubstate(states.Dashing());
+        }
+        else if (context.isWalkingPressed) {
+            SetSubstate(states.Walk());
+        }
+        else{
+            SetSubstate(states.Idle());
+        }
     }
 
     public override void UpdateState()
