@@ -137,23 +137,23 @@ public class PlayerStateMachine : MonoBehaviour
 
         if (angle > 0 && angle < 90)
         {
-            angle -= input.x * circularMoveSpeed * (1-xRate);
-            angle += input.z * circularMoveSpeed * (1-zRate);
+            angle -= input.x * circularMoveSpeed * (1-xRate) / radius;
+            angle += input.z * circularMoveSpeed * (1-zRate) / radius;
         }
         else if (angle < 180)
         {
-            angle -= input.x * circularMoveSpeed * (1-xRate);
-            angle -= input.z * circularMoveSpeed * (1-zRate);
+            angle -= input.x * circularMoveSpeed * (1-xRate) / radius;
+            angle -= input.z * circularMoveSpeed * (1-zRate) / radius;
         }
         else if (angle < 270)
         {
-            angle += input.x * circularMoveSpeed * (1-xRate);
-            angle -= input.z * circularMoveSpeed * (1-zRate);
+            angle += input.x * circularMoveSpeed * (1-xRate) / radius;
+            angle -= input.z * circularMoveSpeed * (1-zRate) / radius;
         }
         else
         {
-            angle += input.x * circularMoveSpeed * (1-xRate);
-            angle += input.z * circularMoveSpeed * (1-zRate);
+            angle += input.x * circularMoveSpeed * (1-xRate) / radius;
+            angle += input.z * circularMoveSpeed * (1-zRate) / radius;
         }
 
         float x = Mathf.Cos((float)(angle - 45) * Mathf.Deg2Rad) * radius;

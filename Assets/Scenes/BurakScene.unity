@@ -1556,7 +1556,7 @@ MonoBehaviour:
   input: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
   moveSpeed: 5
-  circularMoveSpeed: 0.4
+  circularMoveSpeed: 4
   jumpSpeed: 3
   isGrounded: 0
   isFalling: 0
@@ -1565,10 +1565,18 @@ MonoBehaviour:
     m_Bits: 64
   isJumpPressed: 0
   isJumping: 0
+  isDashPressed: 0
+  isDashing: 0
+  isWalkingPressed: 0
   jumpBufferTime: 0.2
   jumpBufferCounter: 0
   coyoteTime: 0.2
   coyoteCounter: 0
+  dashForce: 5
+  dashDuration: 0.75
+  delayedForceToApply: {x: 0, y: 0, z: 0}
+  DashTimer: 1
+  DashTimeCounter: 0
   states: {fileID: 0}
   angle: 0
 --- !u!1 &2033202613

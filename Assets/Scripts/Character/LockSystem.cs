@@ -162,8 +162,8 @@ public class LockSystem : MonoBehaviour
 
     private void HandleLock()
     {
-        isLocked = !isLocked;
         closestEnemy = FindClosestEnemy(this.transform.position, 15f);
+        isLocked = closestEnemy == null ? isLocked : !isLocked;
     }
 
     private void HandleLockSwap()
