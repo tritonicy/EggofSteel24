@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventorySlot : MonoBehaviour
+[System.Serializable]
+public class InventorySlot
 {
     public InventoryItemSO inventoryItem;
     public int currentStack;
@@ -15,17 +16,31 @@ public class InventorySlot : MonoBehaviour
     public InventorySlot() {
         ClearSlot();
     }
+    public InventorySlot(InventorySlot inventorySlot) {
+        this.inventoryItem = inventorySlot.inventoryItem;
+        this.currentStack = inventorySlot.currentStack;
+    }
 
     public void ClearSlot() {
         this.inventoryItem = null;
         this.currentStack = -1;
+    }
+    public void UpdateInventorySlot(InventoryItemSO inventoryItemSO, int amount) {
+        this.inventoryItem = inventoryItemSO;
+        this.currentStack = amount;
+        
     }
 
     public void AddToStack(int amount) {
         currentStack += amount;
     }
 
-    public bool IsRoomLeftInStack(int amount) {
-        return currentStack + amount <= inventoryItem.maxStack;
+    public void RemoveFromStack(int amount) {
+        currentStack -= amount;
     }
+
+    public int HowMuchRoomLeftInStack() {
+        return inventoryItem.maxStack - currentStack;
+    }
+    
 }

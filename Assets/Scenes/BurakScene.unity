@@ -483,6 +483,8 @@ GameObject:
   - component: {fileID: 813548085}
   - component: {fileID: 813548084}
   - component: {fileID: 813548083}
+  - component: {fileID: 813548088}
+  - component: {fileID: 813548087}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
@@ -578,6 +580,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &813548087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813548082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca2c302aac3f0745b9eae8fc96f37dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySystem:
+    invenetorySize: 0
+    inventorySlots: []
+    inventoryType: 3
+    playerStateMachine: {fileID: 0}
+  size: 5
+  droppedItemPrefab: {fileID: 6708825355484463719, guid: ab7a29ab525f25644b883992b01c1cfd,
+    type: 3}
+--- !u!114 &813548088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813548082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfd77c4e506c2f41bab579e0eb0eb5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &862801886
 GameObject:
   m_ObjectHideFlags: 3
@@ -1383,9 +1417,10 @@ GameObject:
   - component: {fileID: 1704482763}
   - component: {fileID: 1704482764}
   - component: {fileID: 1704482765}
+  - component: {fileID: 1704482766}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1553,32 +1588,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockSystem: {fileID: 0}
-  input: {x: 0, y: 0, z: 0}
   rb: {fileID: 0}
+  states: {fileID: 0}
   moveSpeed: 5
+  isWalkingPressed: 0
   circularMoveSpeed: 4
-  jumpSpeed: 3
-  isGrounded: 0
-  isFalling: 0
+  xRate: 1
+  zRate: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  jumpSpeed: 3
+  isGrounded: 0
+  isFalling: 0
   isJumpPressed: 0
   isJumping: 0
-  isDashPressed: 0
   isDashing: 0
-  isWalkingPressed: 0
   jumpBufferTime: 0.2
   jumpBufferCounter: 0
   coyoteTime: 0.2
   coyoteCounter: 0
+  isDashPressed: 0
   dashForce: 5
   dashDuration: 0.75
   delayedForceToApply: {x: 0, y: 0, z: 0}
   DashTimer: 1
   DashTimeCounter: 0
-  states: {fileID: 0}
-  angle: 0
+  input: {x: 0, y: 0, z: 0}
+--- !u!114 &1704482766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1704482757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dca2c302aac3f0745b9eae8fc96f37dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventorySystem:
+    invenetorySize: 10
+    inventorySlots: []
+    inventoryType: 0
+    playerStateMachine: {fileID: 0}
+  size: 10
+  droppedItemPrefab: {fileID: 0}
 --- !u!1 &2033202613
 GameObject:
   m_ObjectHideFlags: 0

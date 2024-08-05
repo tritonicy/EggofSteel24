@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab5c760bc0e843545acb9144fe1b357f, type: 3}
   m_Name: Item2
   m_EditorClassIdentifier: 
-  itemName: 
-  itemDescription: 
-  maxStack: 0
+  itemName: Item2
+  itemDescription: Cool Item 2
+  maxStack: 5
   sprite: {fileID: 0}

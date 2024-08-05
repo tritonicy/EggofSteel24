@@ -43,6 +43,7 @@ public class PlayerStateMachine : MonoBehaviour
     [HideInInspector] public float DashTimeCounter;
     [Header("Other")]
     [HideInInspector] public Vector3 input;
+    [HideInInspector] public Action<DroppedItemSlot> OnItemPickUp;
 
 
 
@@ -206,5 +207,11 @@ public class PlayerStateMachine : MonoBehaviour
     public void DelayedDashForce()
     {
         rb.AddForce(delayedForceToApply, ForceMode.Impulse);
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if(other.gameObject.TryGetComponent<DroppedItemSlot>(out DroppedItemSlot droppedItemSlot)) {
+            OnItemPickUp?.Invoke(droppedItemSlot);
+        }
     }
 }

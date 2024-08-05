@@ -51,7 +51,7 @@ public class Mouse3D : MonoBehaviour
 
     public void ResetMousePosition()
     {
-        Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
+        // Mouse.current.WarpCursorPosition(new Vector2(Screen.width / 2, Screen.height / 2));
         deltaMouseMove = Vector3.zero;
     }
 
