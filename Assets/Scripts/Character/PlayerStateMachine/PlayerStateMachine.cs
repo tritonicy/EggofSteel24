@@ -44,8 +44,7 @@ public class PlayerStateMachine : MonoBehaviour
     [Header("Other")]
     [HideInInspector] public Vector3 input;
     [HideInInspector] public Action<DroppedItemSlot> OnItemPickUp;
-
-
+    [HideInInspector] public Action OnInventoryPressed;
 
     // public get ve setter
     public PlayerBaseState CurrentState { get { return currentState; } set { currentState = value; } }
@@ -60,7 +59,7 @@ public class PlayerStateMachine : MonoBehaviour
         characterInput.Character.Jump.canceled += OnJump;
         characterInput.Character.Dash.started += OnDash;
         characterInput.Character.Dash.canceled += OnDash;
-
+        characterInput.Character.Inventory.performed += HandlePlayerInventory;
 
         states = new PlayerStateFactory(this);
         currentState = states.Grounded();
@@ -213,5 +212,8 @@ public class PlayerStateMachine : MonoBehaviour
         if(other.gameObject.TryGetComponent<DroppedItemSlot>(out DroppedItemSlot droppedItemSlot)) {
             OnItemPickUp?.Invoke(droppedItemSlot);
         }
+    }
+    public void HandlePlayerInventory(InputAction.CallbackContext context){ 
+        OnInventoryPressed?.Invoke();
     }
 }

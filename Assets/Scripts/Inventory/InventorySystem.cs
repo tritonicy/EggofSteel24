@@ -10,7 +10,6 @@ public class InventorySystem
     [HideInInspector] public int invenetorySize;
     [SerializeField] public List<InventorySlot> inventorySlots;
     public Action<InventorySlot> OnItemSlotChanged;
-    [SerializeField] public InventoryType inventoryType;
 
     public InventorySystem(int size) {
         inventorySlots = new List<InventorySlot>(size);
@@ -29,14 +28,11 @@ public class InventorySystem
             {
                 itemSlot.AddToStack(otherSlot.currentStack);
                 otherSlot.RemoveFromStack(otherSlot.currentStack);
-                Debug.Log("1");
             }
             else
             {
                 itemSlot.AddToStack(roomLeft);
                 otherSlot.RemoveFromStack(roomLeft);
-                Debug.Log("2");
-
             }
             OnItemSlotChanged?.Invoke(otherSlot);
             OnItemSlotChanged?.Invoke(itemSlot);
@@ -48,15 +44,11 @@ public class InventorySystem
             {
                 freeSlot.UpdateInventorySlot(otherSlot.inventoryItem, otherSlot.currentStack);
                 otherSlot.RemoveFromStack(otherSlot.currentStack);
-                Debug.Log("3");
-
             }
             else
             {
                 freeSlot = new InventorySlot(otherSlot.inventoryItem, roomLeft);
                 otherSlot.RemoveFromStack(roomLeft);
-                Debug.Log("4");
-
             }
             OnItemSlotChanged?.Invoke(otherSlot);
             OnItemSlotChanged?.Invoke(freeSlot);

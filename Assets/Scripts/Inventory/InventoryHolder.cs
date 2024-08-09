@@ -14,14 +14,21 @@ public class InventoryHolder : MonoBehaviour
     [SerializeField] public int size;
     [SerializeField] private GameObject droppedItemPrefab;
     [HideInInspector] public PlayerStateMachine playerStateMachine;
+    [SerializeField] public InventoryHolderUI inventoryHolderUI;
+    [SerializeField] public InventoryType inventoryType;
+
 
     private void Awake() {
         inventorySystem = new InventorySystem(size);
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
+        if(inventoryType == InventoryType.Player_Inventory){
+            inventoryHolderUI.PlayerInitalize();
+        }
     }
     private void OnEnable() {
         playerStateMachine.OnItemPickUp += HandleItemPickup;
     }
+
     private void OnDisable() {
         playerStateMachine.OnItemPickUp -= HandleItemPickup;
     }
@@ -42,7 +49,7 @@ public class InventoryHolder : MonoBehaviour
         }
     }
     public void HandleItemPickup(DroppedItemSlot droppedItemSlot) {
-        if(inventorySystem.inventoryType == InventoryType.Player_Inventory) {
+        if(inventoryType == InventoryType.Player_Inventory) {
             inventorySystem.AddToInventory(droppedItemSlot.inventorySlot);
         }
     }

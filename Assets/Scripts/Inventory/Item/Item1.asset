@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Item1
   itemDescription: Cool Item1
   maxStack: 1
-  sprite: {fileID: 0}
+  sprite: {fileID: 441018025, guid: dddae5fd5ca85f5489e31318369332b2, type: 3}
