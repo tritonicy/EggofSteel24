@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
-public class InventoryItemUI : MonoBehaviour
+public class InventoryItemUI : MonoBehaviour , IPointerDownHandler
 {
     [SerializeField] public Image itemSprite;
     [SerializeField] public TextMeshProUGUI amount;
@@ -33,5 +34,9 @@ public class InventoryItemUI : MonoBehaviour
     public void UpdateUISlot() {
         this.itemSprite.sprite = this.inventorySlot.inventoryItem.sprite;
         this.amount.text  = this.inventorySlot.currentStack.ToString();
+    }
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log(this.gameObject.transform.position);
     }
 }

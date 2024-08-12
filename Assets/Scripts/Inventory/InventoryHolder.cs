@@ -22,7 +22,7 @@ public class InventoryHolder : MonoBehaviour
         inventorySystem = new InventorySystem(size);
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         if(inventoryType == InventoryType.Player_Inventory){
-            inventoryHolderUI.PlayerInitalize();
+            inventoryHolderUI.Initalize();
         }
     }
     private void OnEnable() {

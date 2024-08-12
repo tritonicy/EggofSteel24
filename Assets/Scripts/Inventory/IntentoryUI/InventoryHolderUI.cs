@@ -13,7 +13,9 @@ public class InventoryHolderUI : MonoBehaviour
     [SerializeField] InventoryType InventoryType;
 
     //Inventory type ilerde sorun cikarabilir. simdilik iyi ama holderlari abstractla degistirmen gerekebilir ilerde.
-    public void PlayerInitalize() {
+    // InventoryHoldler referansina gerek olmamali bagli oldugu inventorysystem yeterli, initalize parametreli olabilir (this inv holder) iceriden inventoryholdera serializefield referans etmeye gerek olmamali
+    // inventory display metodu burada olabilir chest icin falan da gerekli olacak.
+    public void Initalize() {
         this.size = inventoryHolder.size;
         inventorySlotToUI = new Dictionary<InventorySlot, InventoryItemUI>();
         InventoryItemUIs = new List<InventoryItemUI>(size);

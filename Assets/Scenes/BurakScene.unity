@@ -294,10 +294,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1173668935}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 530, y: -340}
+  m_SizeDelta: {x: 1020, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &191152668
 MonoBehaviour:
@@ -913,6 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b631398c698f47438347c867eb618f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInventoryOpen: 0
   inventoryPanel: {fileID: 1173668934}
 --- !u!1 &1005656635
 GameObject:
@@ -1927,10 +1928,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1173668935}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1285, y: -340}
+  m_SizeDelta: {x: 430, y: 640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1801477008
 MonoBehaviour:
