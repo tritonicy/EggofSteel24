@@ -19,10 +19,10 @@ public class InventoryHolder : MonoBehaviour
 
 
     private void Awake() {
-        inventorySystem = new InventorySystem(size);
+        inventorySystem = new InventorySystem(size, inventoryType);
         playerStateMachine = FindObjectOfType<PlayerStateMachine>();
         if(inventoryType == InventoryType.Player_Inventory){
-            inventoryHolderUI.Initalize();
+            inventoryHolderUI.Initalize(this.inventorySystem);
         }
     }
     private void OnEnable() {

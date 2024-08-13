@@ -10,8 +10,10 @@ public class InventorySystem
     [HideInInspector] public int invenetorySize;
     [SerializeField] public List<InventorySlot> inventorySlots;
     public Action<InventorySlot> OnItemSlotChanged;
+    [SerializeField] public InventoryType InventoryType;
 
-    public InventorySystem(int size) {
+    public InventorySystem(int size, InventoryType inventoryType) {
+        this.InventoryType = inventoryType;
         inventorySlots = new List<InventorySlot>(size);
         for (int i = 0; i <size ; i++) {
             inventorySlots.Add(new InventorySlot());

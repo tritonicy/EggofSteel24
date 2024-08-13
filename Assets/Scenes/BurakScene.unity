@@ -313,7 +313,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryItemUIs: []
   size: 0
-  inventoryHolder: {fileID: 1704482766}
+  inventorySystem:
+    invenetorySize: 0
+    inventorySlots: []
   inventoryItemUIPrefab: {fileID: 1121673725093719159, guid: 61f56d7f530a23f4c9e1d76892c2a189,
     type: 3}
   InventoryType: 0
