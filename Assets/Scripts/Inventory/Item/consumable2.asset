@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab5c760bc0e843545acb9144fe1b357f, type: 3}
-  m_Name: Item1
+  m_Script: {fileID: 11500000, guid: 13640225962604941b222005dc14e2f7, type: 3}
+  m_Name: consumable2
   m_EditorClassIdentifier: 
-  itemName: Item1
-  itemDescription: Cool Item1
-  maxStack: 1
+  itemName: Elma
+  itemDescription: Guzel bir elma
+  maxStack: 5
   sprite: {fileID: 441018025, guid: dddae5fd5ca85f5489e31318369332b2, type: 3}

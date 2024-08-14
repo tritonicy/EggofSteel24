@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System;
 
 public class InventoryItemUI : MonoBehaviour , IPointerDownHandler
 {
     [SerializeField] public Image itemSprite;
     [SerializeField] public TextMeshProUGUI amount;
     [SerializeField] public InventorySlot inventorySlot;
+    public Action<InventoryItemUI,PointerEventData> OnSlotClick; 
 
     public InventoryItemUI(InventorySlot inventorySlot) {
         this.itemSprite.sprite = inventorySlot.inventoryItem.sprite;
@@ -37,6 +39,6 @@ public class InventoryItemUI : MonoBehaviour , IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log(this.gameObject.transform.position);
+        OnSlotClick?.Invoke(this,eventData);
     }
 }

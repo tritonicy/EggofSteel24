@@ -10,6 +10,7 @@ public enum InventoryType {
 }
 public class InventoryHolder : MonoBehaviour
 {
+    // bu class abstract olabilir. player icin ayri enemy icin ayri olacak sekilde. chest falan eklenirse yine daha iyi olur.
     [SerializeField] public InventorySystem inventorySystem;
     [SerializeField] public int size;
     [SerializeField] private GameObject droppedItemPrefab;
@@ -50,6 +51,7 @@ public class InventoryHolder : MonoBehaviour
     }
     public void HandleItemPickup(DroppedItemSlot droppedItemSlot) {
         if(inventoryType == InventoryType.Player_Inventory) {
+            Debug.Log(droppedItemSlot.inventorySlot.inventoryItem.ItemType);
             inventorySystem.AddToInventory(droppedItemSlot.inventorySlot);
         }
     }

@@ -10,10 +10,12 @@ public class InventoryHolderUI : MonoBehaviour
     public InventorySystem inventorySystem;
     [SerializeField] GameObject inventoryItemUIPrefab;
     [SerializeField] public Dictionary<InventorySlot,InventoryItemUI> inventorySlotToUI;
+    private UIPopUpManager uIPopUpManager;
 
     // Inventory type ilerde sorun cikarabilir. simdilik iyi ama holderlari abstractla degistirmen gerekebilir ilerde.
     // inventory display metodu burada olabilir chest icin falan da gerekli olacak.
     public void Initalize(InventorySystem inventorySystem) {
+        uIPopUpManager = FindObjectOfType<UIPopUpManager>();
         this.inventorySystem = inventorySystem;
         this.size = inventorySystem.invenetorySize;
         inventorySlotToUI = new Dictionary<InventorySlot, InventoryItemUI>();
@@ -23,6 +25,7 @@ public class InventoryHolderUI : MonoBehaviour
             InventoryItemUI itemUI = Instantiate(inventoryItemUIPrefab, this.transform).GetComponent<InventoryItemUI>();
             itemUI.Init();
             InventoryItemUIs.Add(itemUI);
+            itemUI.OnSlotClick += uIPopUpManager.HandleSlotClick;
             inventorySlotToUI.Add(inventorySystem.inventorySlots[i], InventoryItemUIs[i]);
         }
         inventorySystem.OnItemSlotChanged += HandleUISlot;
@@ -34,6 +37,13 @@ public class InventoryHolderUI : MonoBehaviour
         if(item.Value != null) {
             item.Value.AssignInventoryItemSlot(item.Key);
         }
+    }
+    private void OnDestroy() {
+        foreach (var item in InventoryItemUIs)
+        {
+            item.OnSlotClick -= uIPopUpManager.HandleSlotClick;
+        }
+        inventorySystem.OnItemSlotChanged -= HandleUISlot;
     }
 
 }
